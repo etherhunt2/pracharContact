@@ -12,7 +12,7 @@ const createTransporter = () => {
         throw new Error('Missing SMTP credentials. Please check your .env file.');
     }
 
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: email,
