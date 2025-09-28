@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import contactRoute from './routes/contact.js';
 
@@ -14,26 +13,6 @@ const PORT = process.env.PORT || 3000;
 // Security middleware
 app.use(helmet());
 
-// Rate limiting
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-    message: {
-        error: 'Too many requests from this IP, please try again later.'
-    }
-});
-
-// Form submission rate limiting (stricter)
-const formLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // limit each IP to 5 form submissions per windowMs
-    message: {
-        error: 'Too many form submissions, please try again later.'
-    }
-});
-
-app.use(limiter);
-
 // CORS configuration
 const corsOptions = {
     origin: function (origin, callback) {
@@ -45,7 +24,8 @@ const corsOptions = {
             'http://localhost:3000',
             'http://localhost:3001',
             'http://localhost:5173',
-            'http://127.0.0.1:5173'
+            'http://127.0.0.1:5173',
+            'https://heyprachar.com/'
             // Add your production domains here
         ];
 
@@ -77,7 +57,7 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/contact', formLimiter, contactRoute);
+app.use('/api/contact', contactRoute);
 
 // Root endpoint
 app.get('/', (req, res) => {
