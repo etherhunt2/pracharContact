@@ -7,10 +7,10 @@ import contactRoute from './routes/contact.js';
 // Load environment variables
 dotenv.config();
 
-app.set('trust proxy', 1);
-
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.set('trust proxy', 1);
 
 // Security middleware
 app.use(helmet());
