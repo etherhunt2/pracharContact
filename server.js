@@ -7,6 +7,8 @@ import contactRoute from './routes/contact.js';
 // Load environment variables
 dotenv.config();
 
+app.set('trust proxy', 1);
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -25,7 +27,8 @@ const corsOptions = {
             'http://localhost:3001',
             'http://localhost:5173',
             'http://127.0.0.1:5173',
-            'https://heyprachar.com/'
+            'https://heyprachar.com',
+            'https://www.heyprachar.com'
             // Add your production domains here
         ];
 
